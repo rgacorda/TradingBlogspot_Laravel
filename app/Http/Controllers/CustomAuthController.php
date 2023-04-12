@@ -60,12 +60,9 @@ class CustomAuthController extends Controller
     }
 
     public function dashboard(Request $request){
-        if(Session::has('loginID')){
-            return view('welcome');
-        }else{
-            return redirect('logout');
-        }
+        return view('welcome');
     }
+    
     public function logout(){
 
         if(Session::has('loginID')){

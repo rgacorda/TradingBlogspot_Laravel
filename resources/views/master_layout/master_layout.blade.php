@@ -126,7 +126,10 @@
 
   <!-- convering form register and logn into modal -->
   @include('auth.authentication_modal')
-  @include('user_func.post_modal')
+  @include('user_func.create_post_modal')
+
+
+
 
 
 

@@ -17,7 +17,7 @@ class LoginSession
     public function handle(Request $request, Closure $next)
     {
         if(!Session()->has('loginID')){
-            return redirect('welcome')->with('fail','Login First');
+            return back()->with('fail','Login First');
         }
         return $next($request);
     }

@@ -44,7 +44,7 @@
 
 
   <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <form class="mx-1 mx-md-4" action="{{route('register-user')}}" method="POST">
         <div class="modal-header text-center">

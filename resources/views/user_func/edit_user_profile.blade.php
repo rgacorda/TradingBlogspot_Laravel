@@ -160,8 +160,7 @@
               <td class="">{{$user->password}}</td>
               <td class="">{{$user->role_desc}}</td>
               <td class="">
-                <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editpostModal">Edit</button>
-                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delpostModal">Delete</button>
+                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deluserModal">Delete</button>
               </td>
             </tr>
             @endforeach
@@ -169,70 +168,33 @@
         </table>
       </div>
     </div>
-<br>
-    {{-- Posts --}}
+<br><br>
+    {{-- Pending Posts --}}
+    {{-- Need FIXING --}}
     <div class="">
       <div class="container">
         <div class="row">
           <hr>
-          <h2 class="col-10">All Posts</h2>
-          <div class="col-2">
-              <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createpostModal">Create a Thread</button>
-          </div>
-          <hr>
+          <h2 class="col-10">Pending Approval Posts</h2>
+        </div>
       </div>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col" class="">Title</th>
-              <th scope="col" class="">Author</th>
-              <th scope="col" class="">Action</th>
+              <th scope="col" class="col-7">Title</th>
+              <th scope="col" class="col-3">Upload Date</th>
+              <th scope="col" class="col-2">Action</th>
             </tr>
           </thead>
           <tbody>
-              
-            @foreach ($posts as $post)
+            @foreach ($userposts as $userpost)
             <tr>
-              <td class=""><a href="">{{$post->title}}</a></td>
-              <td class=""><a href="">{{$post->first_name}} {{$post->middle_name}} {{$post->last_name}}</a></td>
-              <td class="">
-                <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editpostModal" data-postid="{{$userpost->id}}"data-posttitle="{{$userpost->title}}" data-postcontent="{{$userpost->content}}" data-postcat="{{$userpost->cat_id}}">Edit</button>
-                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delpostModal" data-postid="{{$userpost->id}}">Delete</button>
-            </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-    </div>
-    {{-- Roles --}}
-    <br>
-    <div class="">
-      <div class="container">
-        <div class="row">
-          <hr>
-          <h2 class="col-10">All Roles</h2>
-          <div class="col-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createroleModal">Create Role</button>
-          </div>
-          <hr>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col" class="">Role Description</th>
-              <th scope="col" class="">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($roles as $role)
-            <tr>
-              <td class="">{{$role->role_desc}}</td>
-              <td class="">
-                <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#">Edit</button>
-                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#">Delete</button>
+              <td class="col-7">{{$userpost->title}}</td>
+              <td class="col-3">{{$userpost->created_at}}</td>
+              <td class="col-2">
+                  <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#approveModal">Accept</button>
+                  <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
               </td>
             </tr>
             @endforeach
@@ -240,48 +202,16 @@
         </table>
       </div>
     </div>
-
-    {{-- Category --}}
-    <br>
-    <div class="">
-      <div class="container">
-        <div class="row">
-          <hr>
-          <h2 class="col-10">All Categories</h2>
-          <div class="col-2">
-              <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createcatModal">Create Category</button>
-          </div>
-          <hr>
-      </div>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col" class="">Category Description</th>
-              <th scope="col" class="">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($cats as $cat)
-            <tr>
-              <td class="">{{$cat->cat_desc}}</td>
-              <td class="">
-                <button type="button" name="cat_edit" class="btn btn-sm btn-outline-secondary">Edit</button>
-                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delcatModal">Delete</button>
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-@else
-<div class="container">
+    
+    
+    <br><br>
+  
+@endif
+<div class="">
   <div class="container">
     <div class="row">
       <hr>
-      <h2 class="col-10">All Posts</h2>
+      <h2 class="col-10">Your Posts</h2>
       <div class="col-2">
         @if (Session::has('loginID'))
           <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createpostModal">Create a Thread</button>
@@ -313,15 +243,15 @@
     </table>
   </div>
 </div>
-@endif
+
 
 
    
-@include('admin_func.cats_modal')
 
 
-
-
+@include('user_func.action_post_modal')
+@include('admin_func.users_modal')
+@include('admin_func.approval_modal')
 
 {{-- pass value to modal delete --}}
   <script>
@@ -351,24 +281,6 @@
       });
     });
   </script>
-
-{{-- modal show --}}
-  <script>
-    var catedit = document.querySelectorAll('button[name="cat_edit"]');
-    catedit.forEach(function(button) {
-      button.addEventListener('click', function() {
-        $('#editcatModal').modal('show');
-      });
-    });
-
-  </script>
-
-
-
-
-
-
-
 
 
 

@@ -134,4 +134,11 @@ class UserProfileController extends Controller
     {
         //
     }
+
+    public function deleteUser(Request $request){
+        $deleted = User::find($request->user_id);
+        $deleted->delete();
+
+        return back()->with('success', 'User has been deleted successfully');
+    }
 }

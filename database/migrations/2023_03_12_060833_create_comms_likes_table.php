@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('comms_likes', function (Blueprint $table) {
             $table->id();
-            $table->boolean('isLiked');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('comm_id');

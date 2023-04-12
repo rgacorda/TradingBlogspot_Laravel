@@ -18,9 +18,7 @@ use App\Http\Controllers\UserProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+
 
 Route::get('/postshow', function () {
     return view('user_func.show_postcom');
