@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get('/postshow', function () {
 
 
 
-//Authentication & Registration
+//Authentication & Registration Routes
 Route::post('/register-user',[CustomAuthController::class,'registerUser'])->name('register-user');
 Route::post('/login-user',[CustomAuthController::class,'loginUser'])->name('login-user');
 Route::get('/dashboard',[CustomAuthController::class, 'dashboard'])->middleware('isLoggedIn');
@@ -37,8 +38,12 @@ Route::resource('post',PostController::class);
 Route::post('/delete_post',[PostController::class,'deletePost']);
 Route::post('/update_post',[PostController::class,'updatePost']);
 
-
 //User Routes
 Route::resource('user',UserProfileController::class);
+
+//Comments Routes
+Route::resource('comment',CommentController::class);
+Route::post('/delete_comm',[CommentController::class,'deleteComm']);
+Route::post('/update_comm',[CommentController::class,'updateComm']);
 
 ?>

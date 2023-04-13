@@ -266,7 +266,7 @@
 
 {{-- pass value to modal update --}}
   <script>
-    //need fixing
+    //need fixing category
     var deleteButtons = document.querySelectorAll('button[name="edit"]');
     deleteButtons.forEach(function(button) {
       button.addEventListener('click', function() {

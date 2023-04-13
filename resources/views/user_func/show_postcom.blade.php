@@ -6,23 +6,17 @@
         <!-- Post header-->
         <header class="mb-4">
             <!-- Post title-->
-            <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
+            <h1 class="fw-bolder mb-1">{{$showpost->title}}</h1>
             <!-- Post meta content-->
-            <div class="text-muted fst-italic mb-2">Posted on January 1, 2022 by Start Bootstrap</div>
+            <div class="text-muted fst-italic mb-2">Posted on {{$showpost->created_at}} by {{$author->first_name}} {{$author->middle_name}} {{$author->last_name}}</div>
             <!-- Post categories-->
-            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+            <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{$category->cat_desc}}</a>
         </header>
         <!-- Preview image figure-->
         <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..."></figure>
         <!-- Post content-->
         <section class="mb-5">
-            <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
-            <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-            <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-            <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-            <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-            <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
+            <p class="fs-5 mb-4">{{$showpost->content}}</p>
         </section>
     </article>
     <!-- Comments section-->
@@ -30,46 +24,60 @@
         <div class="card bg-light">
             <div class="card-body">
                 <!-- Comment form-->
-                <form class="mb-4">
-                    <textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+                <form class="mb-4" method="POST" action="{{route('comment.store')}}" >
+                    @csrf
+                    <input hidden name="post_id" value="{{$showpost->id}}">
+                    <textarea class="form-control" rows="3" name="content" placeholder="Join the discussion and leave a comment!"></textarea><br>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
+                    <span class="text-danger">@error('content') {{$message}}@enderror</span>
                 </form>
-                <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
                 <hr>
-                <!-- Comment with nested comments-->
-                <div class="d-flex mb-4">
-                    <!-- Parent comment-->
-                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-                    <div class="ms-3">
-                        <div class="fw-bold">Commenter Name</div>
-                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                        <!-- Child comment 1-->
-                        <div class="d-flex mt-4">
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                            </div>
-                        </div>
-                        <!-- Child comment 2-->
-                        <div class="d-flex mt-4">
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                When you put money directly to a problem, it makes a good headline.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                @foreach ($comments as $comm)
                 <!-- Single comment-->
                 <div class="d-flex">
                     <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
                     <div class="ms-3">
-                        <div class="fw-bold">Commenter Name</div>
-                        When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                        <div class="fw-bold">{{$comm->first_name}} {{$comm->middle_name}} {{$comm->last_name}}</div>
+                        {{$comm->content}}
                     </div>
                 </div>
+                @if (Session::get('loginID')==$comm->user_id)
+                <div class="card text-end pe-5">
+                    <a class="link-dark" name="editcomm" data-bs-toggle="modal" data-bs-target="#editcomModal" data-commid="{{$comm->id}}" data-commcontent="{{$comm->content}}">Edit</a>
+                    <a class="link-dark" name="delcomm" data-bs-toggle="modal" data-bs-target="#delcomModal" data-commid="{{$comm->id}}">Delete</a>
+                </div>
+                @endif
+                <br>
+                @endforeach
             </div>
         </div>
     </section>
 </div>
+
+@include('user_func.comms_modal')
+
+<script>
+    var deleteButtons = document.querySelectorAll('a[name="editcomm"]');
+    deleteButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var commId = this.getAttribute('data-commid');
+        var commcontent = this.getAttribute('data-commcontent');
+        document.querySelector('#editcomModal input[id="comm_id"]').value = commId;
+        document.querySelector('#editcomModal textarea[id="comm_content"]').value = commcontent;
+      });
+    });
+  </script>
+
+
+<script>
+    var deleteButtons = document.querySelectorAll('a[name="delcomm"]');
+    deleteButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var commId = this.getAttribute('data-commid');
+        document.querySelector('#delcomModal input[id="comm_id"]').value = commId;
+      });
+    });
+  </script>
+
 @endsection

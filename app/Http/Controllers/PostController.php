@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Cat;
 use Illuminate\Http\Request;
 use DB;
 
@@ -36,6 +38,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //add photos
         $request->validate([
             'title'=>'required',
             'content' => 'required',
@@ -65,7 +68,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        //add photos
+        $showpost = Post::where('id',$post->id)->first();
+        $author = User::where('id',$showpost->user_id)->first();
+        $category = Cat::where('id',$showpost->cat_id)->first();
+        $comments = DB::table('comms')
+                ->join('posts','comms.post_id','=','posts.id')
+                ->join('users','comms.user_id','=','users.id')
+                ->select('comms.content','users.first_name','users.middle_name','users.last_name','comms.user_id','comms.id')
+                ->get();
+
+        return view('user_func.show_postcom', compact('showpost','author','category','comments'));
     }
 
     /**
@@ -102,6 +115,8 @@ class PostController extends Controller
 
     }
     public function updatePost(Request $request){
+        //add photos
+
         $request->validate([
             'title'=>'required',
             'content' => 'required',
