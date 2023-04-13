@@ -38,7 +38,7 @@
                 <div class="d-flex">
                     <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
                     <div class="ms-3">
-                        <div class="fw-bold">{{$comm->first_name}} {{$comm->middle_name}} {{$comm->last_name}}</div>
+                        <div class="fw-bold"></div>
                         {{$comm->content}}
                     </div>
                 </div>
