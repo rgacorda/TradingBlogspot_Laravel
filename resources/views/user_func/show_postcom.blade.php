@@ -28,8 +28,14 @@
                     @csrf
                     <input hidden name="post_id" value="{{$showpost->id}}">
                     <textarea class="form-control" rows="3" name="content" placeholder="Join the discussion and leave a comment!"></textarea><br>
+                    {{-- Star Rating --}}
+                    
+
+                    <br><br>
                     <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
                     <span class="text-danger">@error('content') {{$message}}@enderror</span>
+
+
                 </form>
                 <hr>
 
