@@ -45,9 +45,9 @@
     }
 
     input[type="radio"]{
-      display: none;
+      display: none
     }
-
+ 
   </style>
 
 
@@ -158,20 +158,18 @@
   @include('auth.authentication_modal')
   @include('user_func.create_post_modal')
 
-  <script>
-    $('li').on('click',function(){
-      $('li').removeClass('active');
-      $('li').removeClass('secondary-active');
-      $(this).addClass('active');
-      $(this).prevAll().addClass('secondary-active');
-    })
-  </script>
 
 
 
 
-
-
+<script>
+  $('li').on('click', function(){
+    $('li').removeClass('active');
+    $('li').removeClass('secondary-active');
+    $(this).addClass('active');
+    $(this).prevAll().addClass('secondary-active');
+  })
+</script>
 
   
 
