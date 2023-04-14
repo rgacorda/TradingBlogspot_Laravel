@@ -20,6 +20,36 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+  <style>
+    label.rat, input.rat{
+      display: block;
+      width: 100%;
+    }     
+    ul.rat{
+      padding: 0;
+      margin: 0;
+    }
+    ul li.rat{
+      list-style-type: none;
+      display: inline-block;
+      margin: 10px;
+      color: white;
+      text-shadow: 2px 2px 7px grey;
+      font-size: 25px !important;
+    }
+    ul li:hover{
+      color: yellow;
+    }
+    ul li.active, ul li.secondary-active{
+      color: yellow;
+    }
+
+    input[type="radio"]{
+      display: none;
+    }
+
+  </style>
+
 
 </head>
 
@@ -127,6 +157,15 @@
   <!-- convering form register and logn into modal -->
   @include('auth.authentication_modal')
   @include('user_func.create_post_modal')
+
+  <script>
+    $('li').on('click',function(){
+      $('li').removeClass('active');
+      $('li').removeClass('secondary-active');
+      $(this).addClass('active');
+      $(this).prevAll().addClass('secondary-active');
+    })
+  </script>
 
 
 

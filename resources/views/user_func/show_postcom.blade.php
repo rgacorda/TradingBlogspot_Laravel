@@ -29,9 +29,14 @@
                     <input hidden name="post_id" value="{{$showpost->id}}">
                     <textarea class="form-control" rows="3" name="content" placeholder="Join the discussion and leave a comment!"></textarea><br>
                     {{-- Star Rating --}}
-                    
-
-                    <br><br>
+                    <ul class="rat">
+                      <li class="rat"><label class="rat" for="rating_1"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_1" value="1"></li>
+                      <li class="rat"><label class="rat" for="rating_2"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_2" value="2"></li>
+                      <li class="rat"><label class="rat" for="rating_3"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_3" value="3"></li>
+                      <li class="rat"><label class="rat" for="rating_4"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_4" value="4"></li>
+                      <li class="rat"><label class="rat" for="rating_5"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_5" value="5"></li>
+                    </ul>
+                    <br>
                     <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
                     <span class="text-danger">@error('content') {{$message}}@enderror</span>
 
@@ -85,5 +90,7 @@
       });
     });
   </script>
+
+  
 
 @endsection

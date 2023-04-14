@@ -16,6 +16,18 @@
             <span class="text-danger">@error('content') {{$message}}@enderror</span>
           </div>
   
+
+          <div class="form-outline mb-4">
+            <ul class="rat">
+              <li class="rat"><label class="rat" for="rating_1"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_1" value="1"></li>
+              <li class="rat"><label class="rat" for="rating_2"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_2" value="2"></li>
+              <li class="rat"><label class="rat" for="rating_3"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_3" value="3"></li>
+              <li class="rat"><label class="rat" for="rating_4"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_4" value="4"></li>
+              <li class="rat"><label class="rat" for="rating_5"></label><i class="fa fa-star" aria-hidden="true"></i><input class="rat" type="radio" name="ratings" id="rating_5" value="5"></li>
+            </ul>
+
+          </div>
+          
             <div class="modal-footer">
               <button type="submit" name="delete" class="btn btn-success">Update</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
