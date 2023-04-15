@@ -40,6 +40,7 @@ Route::post('/update_post',[PostController::class,'updatePost']);
 
 //User Routes
 Route::resource('user',UserProfileController::class);
+Route::post('/delete_user',[UserProfileController::class,'deleteUser']);
 
 //Comments Routes
 Route::resource('comment',CommentController::class);

@@ -159,8 +159,9 @@
               <td class="">{{$user->email}}</td>
               <td class="">{{$user->password}}</td>
               <td class="">{{$user->role_desc}}</td>
+              <td class="">{{$user->id}}</td>
               <td class="">
-                <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deluserModal">Delete</button>
+                <button type="button" name="del-user" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deluserModal" data-userId="{{$user->id}}">Delete</button>
               </td>
             </tr>
             @endforeach
@@ -281,6 +282,16 @@
       });
     });
   </script>
+
+<script>
+  var deleteButtons = document.querySelectorAll('button[name="del-user"]');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var userId = this.getAttribute('data-userId');
+      document.querySelector('#deluserModal input[id="user_id"]').value = userId;
+    });
+  });
+</script>
 
 
 

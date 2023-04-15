@@ -87,6 +87,7 @@ class UserProfileController extends Controller
         $userposts = Post::where('user_id',$user->id)->get();
         $users = DB::table('users')
                       ->join('roles','users.role_id','=','roles.id')
+                      ->select('users.*','roles.role_desc')
                       ->get();
         $posts = DB::table('users')
                       ->join('posts','users.id','=','posts.user_id')

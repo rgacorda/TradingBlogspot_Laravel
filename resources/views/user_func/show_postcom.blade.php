@@ -24,25 +24,28 @@
         <div class="card bg-light">
             <div class="card-body">
                 <!-- Comment form-->
+                @if (Session::has('loginID'))
                 <form class="mb-4" method="POST" action="{{route('comment.store')}}" >
-                    @csrf
-                    <input hidden name="post_id" value="{{$showpost->id}}">
-                    <textarea class="form-control" rows="3" name="content" placeholder="Join the discussion and leave a comment!"></textarea><br>
-                    {{-- Star Rating --}}
-                    <ul class="rat">
-                      <li class="rat"><label class="rat" for="rating_1"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_1" value="1"></li>
-                      <li class="rat"><label class="rat" for="rating_2"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_2" value="2"></li>
-                      <li class="rat"><label class="rat" for="rating_3"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_3" value="3"></li>
-                      <li class="rat"><label class="rat" for="rating_4"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_4" value="4"></li>
-                      <li class="rat"><label class="rat" for="rating_5"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_5" value="5"></li>
-                    </ul>
-                    <br>
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
-                    <span class="text-danger">@error('content') {{$message}}@enderror</span>
-                    <span class="text-danger">@error('ratings') {{$message}}@enderror</span>
+                  @csrf
+                  <input hidden name="post_id" value="{{$showpost->id}}">
+                  <textarea class="form-control" rows="3" name="content" placeholder="Join the discussion and leave a comment!"></textarea><br>
+                  {{-- Star Rating --}}
+                  <ul class="rat">
+                    <li class="rat"><label class="rat" for="rating_1"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_1" value="1"></li>
+                    <li class="rat"><label class="rat" for="rating_2"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_2" value="2"></li>
+                    <li class="rat"><label class="rat" for="rating_3"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_3" value="3"></li>
+                    <li class="rat"><label class="rat" for="rating_4"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_4" value="4"></li>
+                    <li class="rat"><label class="rat" for="rating_5"><i class="fa fa-star" aria-hidden="true"></i></label><input class="rat" type="radio" name="ratings" id="rating_5" value="5"></li>
+                  </ul>
+                  <br>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
+                  <span class="text-danger">@error('content') {{$message}}@enderror</span>
+                  <span class="text-danger">@error('ratings') {{$message}}@enderror</span>
 
 
-                </form>
+              </form>
+                @endif
+                
                 <hr>
 
                 @foreach ($comments as $comm)

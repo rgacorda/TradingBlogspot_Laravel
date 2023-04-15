@@ -88,7 +88,7 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to delete this user?</p>
-          <form action="" method="post">
+          <form action="{{url('/delete_user')}}" method="post">
             @csrf
             <input hidden name="user_id" id="user_id">
             <div class="modal-footer">
