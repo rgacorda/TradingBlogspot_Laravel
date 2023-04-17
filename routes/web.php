@@ -37,6 +37,7 @@ Route::get('/logout',[CustomAuthController::class,'logout']);
 Route::resource('post',PostController::class);
 Route::post('/delete_post',[PostController::class,'deletePost']);
 Route::post('/update_post',[PostController::class,'updatePost']);
+Route::get('/search', [PostController::class, 'search'])->name('search');
 
 //User Routes
 Route::resource('user',UserProfileController::class);

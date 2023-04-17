@@ -140,4 +140,30 @@ class PostController extends Controller
 
         return back()->with('success', 'Post has been deleted successfully');
     }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search by user name (only show title and content)
+        $user_posts = Post::select('posts.title', 'posts.content', 'users.first_name', 'users.middle_name', 'users.last_name', 'posts.id')
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->where(function ($q) use ($query) {
+                $q->where('users.first_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('users.middle_name', 'LIKE', '%' . $query . '%')
+                    ->orWhere('users.last_name', 'LIKE', '%' . $query . '%');
+            })
+            ->get();
+
+        // Search by post title (show titles)
+        $title_posts = Post::select('title', 'content', 'id')
+            ->where('title', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        // Search by content title(show contents and titles)
+        $content_posts = Post::select('title', 'content', 'id')
+            ->where('content', 'LIKE', '%' . $query . '%')
+            ->get();
+
+        return view('search_func.posts_search', compact('user_posts', 'title_posts', 'content_posts', 'query'));
+    }
 }
