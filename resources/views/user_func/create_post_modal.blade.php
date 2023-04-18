@@ -1,7 +1,7 @@
 <div class="modal fade" id="createpostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
-        <form class="mx-1 mx-md-4" action="{{route('post.store')}}" method="POST">
+        <form class="mx-1 mx-md-4" action="{{route('post.store')}}" method="POST" enctype="multipart/form-data">
           @csrf
         <div class="modal-header text-center">
           <h4 class="modal-title w-100 font-weight-bold">Create a Thread</h4>
@@ -19,6 +19,11 @@
             <textarea class="form-control" name="content" rows="8"></textarea>
             <label class="form-label" for="textAreaExample6">Content and Details</label>
             <span class="text-danger">@error('content') {{$message}}@enderror</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Upload Image</label>
+            <input class="form-control" name='image' type="file" id="formFile">
           </div>
 
           <?php 

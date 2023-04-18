@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Cat;
 use Illuminate\Http\Request;
 use DB;
+use File;
 
 class PostController extends Controller
 {
@@ -50,6 +51,21 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->user_id = $request->session()->get('loginID');
         $post->cat_id = $request->cats;
+
+        if($request->hasFile('image')){
+            if($request->hasFile('image')){
+                $extension = $request->file('image')->extension();
+                $destination_path = 'public/images/posts';
+                $image = $request->file('image');
+                $image_name = 'post_'.session()->get('loginID').$request->title.'.'.$extension;
+                $path = $request->file('image')->storeAs($destination_path,$image_name);
+    
+                $input['image'] = $image_name;
+            }
+    
+            $post->image = $input['image'];
+        }
+
         $res = $post->save();
 
         if($res){
@@ -57,7 +73,7 @@ class PostController extends Controller
         }else{
             return back()->with('fail','Something wrong');
         }
-        //convert confirmation to footer modal
+
     }
 
     /**
@@ -123,14 +139,32 @@ class PostController extends Controller
             'content' => 'required',
             'cats' => 'required'
         ]);
+
+        $post = Post::find($request->id);
         
-        $users = DB::table('posts')
-        ->where('id','=' ,$request->id)
-        ->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            'cat_id' => $request->cats
-        ]);
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->cat_id = $request->cats;
+
+        if($request->hasFile('image')){
+            $destination = 'storage/images/posts'.$post->image;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+
+            if($request->hasFile('image')){
+                $extension = $request->file('image')->extension();
+                $destination_path = 'public/images/posts';
+                $image = $request->file('image');
+                $image_name = 'post_'.session()->get('loginID').$request->title.'.'.$extension;
+                $path = $request->file('image')->storeAs($destination_path,$image_name);
+                $input['image'] = $image_name;
+            }
+    
+            $post->image = $input['image'];
+        }
+        $post->save();
+
         return back()->with('success', 'Post has been updated successfully');
     }
 

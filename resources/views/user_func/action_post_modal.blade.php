@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body">
           
-          <form action="{{url('/update_post')}}" method="post">
+          <form action="{{url('/update_post')}}" method="post" enctype="multipart/form-data">
             @csrf
             <input id="post_id" name="id" hidden>
           <div class="form-outline mb-4">
@@ -21,6 +21,11 @@
             <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
             <label class="form-label" for="textAreaExample6">Content and Details</label>
             <span class="text-danger">@error('content') {{$message}}@enderror</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" name='image' type="file" id="formFile">
           </div>
   
   

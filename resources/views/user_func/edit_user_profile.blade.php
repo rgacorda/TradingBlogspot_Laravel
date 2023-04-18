@@ -10,6 +10,9 @@
 <div class="container">
 <div class="row flex-lg-nowrap">
 
+  <form class="form" action="{{route('user.update',Session::get('loginID'))}}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
   <div class="col">
     <div class="row">
       <div class="col mb-3">
@@ -17,22 +20,24 @@
           <div class="card-body">
             <div class="e-profile">
               <div class="row">
+                
                 <div class="col-12 col-sm-auto mb-3">
-                  <div class="mx-auto" style="width: 140px;">
-                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                      <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">140x140</span>
+                  <div class="mx-auto" style="width: 280px;">
+                    @if (empty($userdetails->profile)) 
+                    <figure class="mb-4"><img class="img-fluid rounded" style="width: 280px; height:280px;" src="https://dummyimage.com/280x280ced4da/6c757d.jpg" alt="..."></figure>
+                    @else
+                    <figure class="mb-4"><img class="img-fluid rounded" style="width: 280px; height:280px;" src="{{asset('/storage/images/profile/'.$userdetails->profile)}}" ></figure>
+                    @endif
                     </div>
+                      <div class="mb-3">
+                        <input class="form-control" name='profile' type="file" id="formFile">
+                      </div>
                   </div>
-                </div>
+                </div><hr>
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
                     <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{$userdetails->first_name}} {{$userdetails->middle_name}} {{$userdetails->last_name}}</h4>
-                    <div class="mt-2">
-                      <button class="btn btn-sm btn-outline-secondary" type="button">
-                        <i class="fa fa-fw fa-camera"></i>
-                        <span>Change Photo</span>
-                      </button>
-                    </div>
+                    
                   </div>
                   <div class="text-center text-sm-right">
                     <span class="badge badge-secondary">{{$userdetails->role_desc}}</span>
@@ -45,9 +50,7 @@
               </ul>
               <div class="tab-content pt-3">
                 <div class="tab-pane active">
-                  <form class="form" action="{{route('user.update',Session::get('loginID'))}}" method="POST">
-                    @csrf
-                    @method('PUT')
+                  
                     <div class="row">
                       <div class="col">
                         <div class="row">
@@ -91,14 +94,6 @@
                     <div class="row">
                       <div class="col-12 col-sm-6 mb-3">
                         <div class="mb-2"><b>Change Password</b></div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Current Password</label>
-                              <input class="form-control" type="password" placeholder="{{$userdetails->password}}">
-                            </div>
-                          </div>
-                        </div>
                         <div class="row">
                           <div class="col">
                             <div class="form-group">
@@ -172,8 +167,8 @@
 <br><br>
     {{-- Pending Posts --}}
     {{-- Need FIXING --}}
-    <div class="">
-      <div class="container">
+    <div class="container">
+      <div class="">
         <div class="row">
           <hr>
           <h2 class="col-10">Pending Approval Posts</h2>
@@ -208,8 +203,8 @@
     <br><br>
   
 @endif
-<div class="">
-  <div class="container">
+<div class="container">
+  <div class="">
     <div class="row">
       <hr>
       <h2 class="col-10">Your Posts</h2>

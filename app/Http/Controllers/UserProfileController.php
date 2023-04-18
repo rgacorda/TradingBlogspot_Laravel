@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Hash;
+use File;
 
 class UserProfileController extends Controller
 {
@@ -111,18 +112,34 @@ class UserProfileController extends Controller
     public function update(Request $request, User $user)
     {
         //add validations & modal alert footer
+        $user = User::find($user->id);
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->bio = $request->bio;
+        $user->password = Hash::make($request->password);
 
-        $users = DB::table('users')
-        ->where('id','=' ,$user->id)
-        ->update([
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'bio' => $request->bio,
-            'password' => Hash::make($request->password)
-        ]);
-        return back();
+        if($request->hasFile('profile')){
+            $destination = 'storage/images/profile'.$user->profile;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+
+            if($request->hasFile('profile')){
+                $extension = $request->file('profile')->extension();
+                $destination_path = 'public/images/profile';
+                $image = $request->file('profile');
+                $image_name = 'profile_'.session()->get('loginID').$extension;
+                $path = $request->file('profile')->storeAs($destination_path,$image_name);
+                $input['profile'] = $image_name;
+            }
+    
+            $user->profile = $input['profile'];
+        }
+        $user->save();
+        
+        return back()->with('success', 'User has been updated successfully');
     }
 
     /**

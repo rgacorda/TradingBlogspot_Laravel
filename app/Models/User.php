@@ -14,6 +14,7 @@ class User extends Model
         'middle_name',
         'email',
         'password',
-        'bio'
+        'bio',
+        'profile'
     ];
 }
