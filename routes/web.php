@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\CommentController;
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/Home');
 });
 
 
@@ -47,5 +48,17 @@ Route::post('/delete_user',[UserProfileController::class,'deleteUser']);
 Route::resource('comment',CommentController::class);
 Route::post('/delete_comm',[CommentController::class,'deleteComm']);
 Route::post('/update_comm',[CommentController::class,'updateComm']);
+
+//Category Routes
+Route::get('/Home',[CategoryController::class,'Home']);
+Route::get('/LongTerm',[CategoryController::class,'LongTerm']);
+Route::get('/ShortTerm',[CategoryController::class,'ShortTerm']);
+Route::get('/Intraday',[CategoryController::class,'Intraday']);
+Route::get('/LongIdeas',[CategoryController::class,'LongIdeas']);
+Route::get('/ShortIdeas',[CategoryController::class,'ShortIdeas']);
+Route::get('/Risk',[CategoryController::class,'Risk']);
+Route::get('/Tips',[CategoryController::class,'Tips']);
+Route::get('/Psychology',[CategoryController::class,'Psychology']);
+Route::get('/Secrets',[CategoryController::class,'Secrets']);
 
 ?>

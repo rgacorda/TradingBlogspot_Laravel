@@ -64,7 +64,7 @@
               <h1 class="text-muted">Create Trade Share</h1>
             </div>
             <div class="col-4 text-center">
-              <a class="blog-header-logo text-dark" href="/">Home</a>
+              <a class="blog-header-logo text-dark" href="{{url('/Home')}}">Home</a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
 
@@ -99,15 +99,15 @@
 
         <div class="nav-scroller py-1 mb-2">
           <nav class="nav d-flex justify-content-between">
-            <a class="p-2 text-muted" href="#">Long Term</a>
-            <a class="p-2 text-muted" href="#">Short Term</a>
-            <a class="p-2 text-muted" href="#">Intraday</a>
-            <a class="p-2 text-muted" href="#">Long Ideas</a>
-            <a class="p-2 text-muted" href="#">Short Ideas</a>
-            <a class="p-2 text-muted" href="#">Risk</a>
-            <a class="p-2 text-muted" href="#">Tips</a>
-            <a class="p-2 text-muted" href="#">Psychology</a>
-            <a class="p-2 text-muted" href="#">Secrets</a>
+            <a class="p-2 text-muted" href="{{url('/LongTerm')}}">Long Term</a>
+            <a class="p-2 text-muted" href="{{url('/ShortTerm')}}">Short Term</a>
+            <a class="p-2 text-muted" href="{{url('/Intraday')}}">Intraday</a>
+            <a class="p-2 text-muted" href="{{url('/LongIdeas')}}">Long Ideas</a>
+            <a class="p-2 text-muted" href="{{url('/ShortIdeas')}}">Short Ideas</a>
+            <a class="p-2 text-muted" href="{{url('/Risk')}}">Risk</a>
+            <a class="p-2 text-muted" href="{{url('/Tips')}}">Tips</a>
+            <a class="p-2 text-muted" href="{{url('/Psychology')}}">Psychology</a>
+            <a class="p-2 text-muted" href="{{url('/Secrets')}}">Secrets</a>
           </nav>
         </div><hr>
 

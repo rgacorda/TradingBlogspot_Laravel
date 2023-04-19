@@ -60,14 +60,18 @@ class CustomAuthController extends Controller
     }
 
     public function dashboard(Request $request){
-        return view('welcome');
+        $posts = DB::table('users')
+                    ->join('posts','users.id','=','posts.user_id')
+                    ->select('posts.title','users.first_name','users.middle_name','users.last_name','posts.id')
+                    ->get();
+        return view('welcome', compact('posts'));
     }
     
     public function logout(){
 
         if(Session::has('loginID')){
             Session::pull('loginID');
-            return view('welcome');
+            return redirect('/Home');
         }
         
     }

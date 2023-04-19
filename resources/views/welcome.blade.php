@@ -72,12 +72,6 @@
           </tr>
         </thead>
         <tbody>
-          <?php
-            $posts = DB::table('users')
-                    ->join('posts','users.id','=','posts.user_id')
-                    ->select('posts.title','users.first_name','users.middle_name','users.last_name','posts.id')
-                    ->get();
-            ?>
           @foreach ($posts as $post)
           <tr>
             <td class="col-8"><a href="{{route('post.show',$post->id)}}">{{$post->title}}</a></td>
