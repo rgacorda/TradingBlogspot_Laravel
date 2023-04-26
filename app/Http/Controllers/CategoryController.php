@@ -12,7 +12,7 @@ class CategoryController extends Controller
         $posts = DB::table('users')
                     ->join('posts','users.id','=','posts.user_id')
                     ->select('posts.title','users.first_name','users.middle_name','users.last_name','posts.id')
-                    ->get();
+                    ->paginate(5);
         return view('welcome', compact('posts'));
     }
     public function LongTerm(){
@@ -87,5 +87,5 @@ class CategoryController extends Controller
                     ->get();
         return view('welcome', compact('posts'));
     }
-    
+
 }

@@ -20,10 +20,10 @@
           <div class="card-body">
             <div class="e-profile">
               <div class="row">
-                
+
                 <div class="col-12 col-sm-auto mb-3">
                   <div class="mx-auto" style="width: 280px;">
-                    @if (empty($userdetails->profile)) 
+                    @if (empty($userdetails->profile))
                     <figure class="mb-4"><img class="img-fluid rounded" style="width: 280px; height:280px;" src="https://dummyimage.com/280x280ced4da/6c757d.jpg" alt="..."></figure>
                     @else
                     <figure class="mb-4"><img class="img-fluid rounded" style="width: 280px; height:280px;" src="{{asset('/storage/images/profile/'.$userdetails->profile)}}" ></figure>
@@ -37,7 +37,7 @@
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
                     <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{$userdetails->first_name}} {{$userdetails->middle_name}} {{$userdetails->last_name}}</h4>
-                    
+
                   </div>
                   <div class="text-center text-sm-right">
                     <span class="badge badge-secondary">{{$userdetails->role_desc}}</span>
@@ -50,7 +50,7 @@
               </ul>
               <div class="tab-content pt-3">
                 <div class="tab-pane active">
-                  
+
                     <div class="row">
                       <div class="col">
                         <div class="row">
@@ -198,10 +198,10 @@
         </table>
       </div>
     </div>
-    
-    
+
+
     <br><br>
-  
+
 @endif
 <div class="container">
   <div class="">
@@ -237,12 +237,13 @@
         @endforeach
       </tbody>
     </table>
+    {!! $posts->links('pagination::bootstrap-5') !!}
   </div>
 </div>
 
 
 
-   
+
 
 
 @include('user_func.action_post_modal')

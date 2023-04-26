@@ -57,7 +57,7 @@ class UserProfileController extends Controller
         $user->role_id=$request->role_id;
         $user->bio='empty';
         $user->password=Hash::make($request->password);
-        $res = $user->save(); 
+        $res = $user->save();
         if($res){
             return back()->with('success','You have registered Succesfully');
         }else{
@@ -89,15 +89,15 @@ class UserProfileController extends Controller
         $users = DB::table('users')
                       ->join('roles','users.role_id','=','roles.id')
                       ->select('users.*','roles.role_desc')
-                      ->get();
+                      ->paginate(5);
         $posts = DB::table('users')
                       ->join('posts','users.id','=','posts.user_id')
                       ->select('posts.title','users.first_name','users.middle_name','users.last_name')
-                      ->get();
-        
+                      ->paginate(5);
+
         $cats = DB::table('cats')->get();
         $roles = DB::table('roles')->get();
-              
+
 
         return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts','cats','roles'));
     }
@@ -134,11 +134,11 @@ class UserProfileController extends Controller
                 $path = $request->file('profile')->storeAs($destination_path,$image_name);
                 $input['profile'] = $image_name;
             }
-    
+
             $user->profile = $input['profile'];
         }
         $user->save();
-        
+
         return back()->with('success', 'User has been updated successfully');
     }
 

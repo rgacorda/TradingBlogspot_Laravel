@@ -50,7 +50,7 @@
   </div>
 
   <!-- Will be using for loop to display recent posted blogs (use foreach)-->
-  
+
   <div class="container">
     <div class="container">
       <div class="row">
@@ -80,8 +80,9 @@
           @endforeach
         </tbody>
       </table>
+      {!! $posts->links('pagination::bootstrap-5') !!}
     </div>
   </div>
 
- 
+
 @endsection

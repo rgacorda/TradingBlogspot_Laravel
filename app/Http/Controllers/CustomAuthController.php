@@ -26,7 +26,7 @@ class CustomAuthController extends Controller
         $user->role_id=2;
         $user->bio='empty';
         $user->password=Hash::make($request->password);
-        $res = $user->save(); 
+        $res = $user->save();
         if($res){
             return back()->with('success','You have registered Succesfully');
         }else{
@@ -36,7 +36,7 @@ class CustomAuthController extends Controller
     }
 
 
-    
+
     public function loginUser(Request $request){
         $request->validate([
             'email'=>'required|email',
@@ -63,16 +63,16 @@ class CustomAuthController extends Controller
         $posts = DB::table('users')
                     ->join('posts','users.id','=','posts.user_id')
                     ->select('posts.title','users.first_name','users.middle_name','users.last_name','posts.id')
-                    ->get();
+                    ->paginate(5);
         return view('welcome', compact('posts'));
     }
-    
+
     public function logout(){
 
         if(Session::has('loginID')){
             Session::pull('loginID');
             return redirect('/Home');
         }
-        
+
     }
 }
