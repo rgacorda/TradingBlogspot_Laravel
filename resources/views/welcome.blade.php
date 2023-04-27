@@ -75,7 +75,7 @@
           @foreach ($posts as $post)
           <tr>
             <td class="col-8"><a href="{{route('post.show',$post->id)}}">{{$post->title}}</a></td>
-            <td class="col-3"><a href="">{{$post->first_name}} {{$post->middle_name}} {{$post->last_name}}</a></td>
+            <td class="col-3"><a href="{{route('user.show',$post->user_id)}}">{{$post->first_name}} {{$post->middle_name}} {{$post->last_name}}</a></td>
           </tr>
           @endforeach
         </tbody>

@@ -73,7 +73,14 @@ class UserProfileController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $userdetails = DB::table('users')
+         ->join('roles','users.role_id','=','roles.id')
+         ->where('users.id','=',$user->id)
+         ->first();
+
+        $userposts = Post::where('user_id',$user->id)->paginate(5);
+
+        return view('user_func.visit_profile', compact('userdetails','userposts'));
     }
 
 
@@ -95,11 +102,9 @@ class UserProfileController extends Controller
                       ->select('posts.title','users.first_name','users.middle_name','users.last_name')
                       ->paginate(5);
 
-        $cats = DB::table('cats')->get();
-        $roles = DB::table('roles')->get();
 
 
-        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts','cats','roles'));
+        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts'));
     }
 
     /**

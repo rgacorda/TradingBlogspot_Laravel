@@ -22,8 +22,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('/postshow', function () {
-    return view('user_func.show_postcom');
+Route::get('/visit', function () {
+    return view('user_func.visit_profile');
 });
 
 

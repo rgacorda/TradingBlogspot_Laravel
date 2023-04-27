@@ -59,10 +59,10 @@ class PostController extends Controller
                 $image = $request->file('image');
                 $image_name = 'post_'.session()->get('loginID').$request->title.'.'.$extension;
                 $path = $request->file('image')->storeAs($destination_path,$image_name);
-    
+
                 $input['image'] = $image_name;
             }
-    
+
             $post->image = $input['image'];
         }
 
@@ -93,7 +93,7 @@ class PostController extends Controller
                 ->join('users','comms.user_id','=','users.id')
                 ->where('posts.id','=',$post->id)
                 ->select('comms.content','users.first_name','users.middle_name','users.last_name','comms.user_id','comms.id','comms.rating')
-                ->get();
+                ->paginate(5);
 
         return view('user_func.show_postcom', compact('showpost','author','category','comments'));
     }
@@ -118,7 +118,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        
+
     }
 
     /**
@@ -141,7 +141,7 @@ class PostController extends Controller
         ]);
 
         $post = Post::find($request->id);
-        
+
         $post->title = $request->title;
         $post->content = $request->content;
         $post->cat_id = $request->cats;
@@ -160,7 +160,7 @@ class PostController extends Controller
                 $path = $request->file('image')->storeAs($destination_path,$image_name);
                 $input['image'] = $image_name;
             }
-    
+
             $post->image = $input['image'];
         }
         $post->save();
