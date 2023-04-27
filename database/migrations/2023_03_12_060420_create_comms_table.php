@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('comms', function (Blueprint $table) {
             $table->id();
             $table->string('content');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('post_id');

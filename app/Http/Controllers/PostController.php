@@ -93,7 +93,7 @@ class PostController extends Controller
                 ->join('users','comms.user_id','=','users.id')
                 ->where('posts.id','=',$post->id)
                 ->select('comms.content','users.first_name','users.middle_name','users.last_name','comms.user_id','comms.id','comms.rating')
-                ->paginate(5);
+                ->get();
 
         return view('user_func.show_postcom', compact('showpost','author','category','comments'));
     }

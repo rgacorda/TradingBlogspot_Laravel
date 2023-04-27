@@ -38,8 +38,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content'=>'required',
-            'ratings' => 'required'
+            'content'=>'required'
         ]);
 
         $comm = new Comm();
@@ -103,16 +102,14 @@ class CommentController extends Controller
 
     public function updateComm(Request $request){
         $request->validate([
-            'content' => 'required',
-            'ratings' => 'required'
+            'content' => 'required'
         ]);
         
-        $users = DB::table('comms')
-        ->where('id','=' ,$request->comm_id)
-        ->update([
-            'content' => $request->content,
-            'rating' => $request->ratings
-        ]);
+        $comm = Comm::find($request->comm_id);
+        $comm->content = $request->content;
+        $comm->rating = $request->ratings;
+        $comm->save();
+
         return back()->with('success', 'Comment has been updated successfully');
     }
 

@@ -46,7 +46,6 @@
                   <br>
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Post</button>
                   <span class="text-danger">@error('content') {{$message}}@enderror</span>
-                  <span class="text-danger">@error('ratings') {{$message}}@enderror</span>
 
 
               </form>
