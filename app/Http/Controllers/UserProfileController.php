@@ -91,7 +91,7 @@ class UserProfileController extends Controller
          ->where('users.id','=',$user->id)
          ->first();
 
-
+        $approve = Post::where('isApproved','=',"To be Approved")->get();
         $userposts = Post::where('user_id',$user->id)->get();
         $users = DB::table('users')
                       ->join('roles','users.role_id','=','roles.id')
@@ -104,7 +104,7 @@ class UserProfileController extends Controller
 
 
 
-        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts'));
+        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts','approve'));
     }
 
     /**

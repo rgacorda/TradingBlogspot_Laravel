@@ -39,6 +39,8 @@ Route::resource('post',PostController::class);
 Route::post('/delete_post',[PostController::class,'deletePost']);
 Route::post('/update_post',[PostController::class,'updatePost']);
 Route::get('/search', [PostController::class, 'search'])->name('search');
+Route::post('/approvePost',[PostController::class,'approvePost']);
+Route::post('/rejectPost',[PostController::class,'rejectPost']);
 
 //User Routes
 Route::resource('user',UserProfileController::class);

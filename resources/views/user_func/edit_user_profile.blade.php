@@ -184,13 +184,13 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($userposts as $userpost)
+            @foreach ($approve as $appr)
             <tr>
-              <td class="col-7">{{$userpost->title}}</td>
-              <td class="col-3">{{$userpost->created_at}}</td>
+              <td class="col-7">{{$appr->title}}</td>
+              <td class="col-3">{{$appr->created_at}}</td>
               <td class="col-2">
-                  <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#approveModal">Accept</button>
-                  <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+                  <button type="button" name="approve" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#approveModal" data-postid="{{$appr->id}}">Accept</button>
+                  <button type="button" name="reject" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal" data-postid="{{$appr->id}}">Reject</button>
               </td>
             </tr>
             @endforeach
@@ -220,7 +220,7 @@
       <thead>
         <tr>
           <th scope="col" class="col-7">Title</th>
-          <th scope="col" class="col-3">Upload Date</th>
+          <th scope="col" class="col-3">Status</th>
           <th scope="col" class="col-2">Action</th>
         </tr>
       </thead>
@@ -228,7 +228,7 @@
         @foreach ($userposts as $userpost)
         <tr>
           <td class="col-7">{{$userpost->title}}</td>
-          <td class="col-3">{{$userpost->created_at}}</td>
+          <td class="col-3">{{$userpost->isApproved}}</td>
           <td class="col-2">
               <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editpostModal" data-postid="{{$userpost->id}}"data-posttitle="{{$userpost->title}}" data-postcontent="{{$userpost->content}}" data-postcat="{{$userpost->cat_id}}">Edit</button>
               <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delpostModal" data-postid="{{$userpost->id}}">Delete</button>
@@ -285,6 +285,26 @@
     button.addEventListener('click', function() {
       var userId = this.getAttribute('data-userId');
       document.querySelector('#deluserModal input[id="user_id"]').value = userId;
+    });
+  });
+</script>
+
+<script>
+  var deleteButtons = document.querySelectorAll('button[name="approve"]');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var postId = this.getAttribute('data-postid');
+      document.querySelector('#approveModal input[name="post_id"]').value = postId;
+    });
+  });
+</script>
+
+<script>
+  var deleteButtons = document.querySelectorAll('button[name="reject"]');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var postId = this.getAttribute('data-postid');
+      document.querySelector('#rejectModal input[name="post_id"]').value = postId;
     });
   });
 </script>

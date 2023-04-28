@@ -7,9 +7,9 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to approve this post?</p>
-          <form action="" method="post">
+          <form action="{{url('/approvePost')}}" method="post">
             @csrf
-            <input hidden name="user_id" id="user_id">
+            <input hidden name="post_id" id="post_id">
             <div class="modal-footer">
               <button type="submit" name="delete" class="btn btn-success">Proceed</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -29,9 +29,9 @@
         </div>
         <div class="modal-body">
           <p>Are you sure you want to reject this post?</p>
-          <form action="" method="post">
+          <form action="{{url('/rejectPost')}}" method="post">
             @csrf
-            <input hidden name="user_id" id="user_id">
+            <input hidden name="post_id" id="post_id">
             <div class="modal-footer">
               <button type="submit" name="delete" class="btn btn-danger">Proceed</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

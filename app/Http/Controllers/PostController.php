@@ -49,6 +49,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
+        $post->isApproved = "To be Approved";
         $post->user_id = $request->session()->get('loginID');
         $post->cat_id = $request->cats;
 
@@ -199,5 +200,20 @@ class PostController extends Controller
             ->get();
 
         return view('search_func.posts_search', compact('user_posts', 'title_posts', 'content_posts', 'query'));
+    }
+
+    public function approvePost(Request $request){
+        $post = Post::find($request->post_id);
+        $post->isApproved = "Accepted";
+        $post->save();
+
+        return back()->with('success','The post has been Accepted');
+    }
+    public function rejectPost(Request $request){
+        $post = Post::find($request->post_id);
+        $post->isApproved = "Rejected";
+        $post->save();
+
+        return back()->with('success','The post has been Rejected');
     }
 }

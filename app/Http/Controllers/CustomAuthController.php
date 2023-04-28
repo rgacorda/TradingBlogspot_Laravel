@@ -62,6 +62,7 @@ class CustomAuthController extends Controller
     public function dashboard(Request $request){
         $posts = DB::table('users')
                     ->join('posts','users.id','=','posts.user_id')
+                    ->where('isApproved','=','Accepted')
                     ->select('posts.title','users.first_name','users.middle_name','users.last_name','posts.id','posts.user_id')
                     ->paginate(5);
         return view('welcome', compact('posts'));
