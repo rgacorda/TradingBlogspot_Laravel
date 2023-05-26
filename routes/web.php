@@ -41,6 +41,8 @@ Route::post('/update_post',[PostController::class,'updatePost']);
 Route::get('/search', [PostController::class, 'search'])->name('search');
 Route::post('/approvePost',[PostController::class,'approvePost']);
 Route::post('/rejectPost',[PostController::class,'rejectPost']);
+Route::post('/rejectDelete',[PostController::class,'deleteReject']);
+Route::post('/promptDelete',[PostController::class,'deletePrompt']);
 
 //User Routes
 Route::resource('user',UserProfileController::class);
@@ -62,5 +64,8 @@ Route::get('/Risk',[CategoryController::class,'Risk']);
 Route::get('/Tips',[CategoryController::class,'Tips']);
 Route::get('/Psychology',[CategoryController::class,'Psychology']);
 Route::get('/Secrets',[CategoryController::class,'Secrets']);
+
+//Generate Reports
+Route::get('/generate-pdf', [PostController::class, 'generatePDF'])->name('generatePDF');
 
 ?>

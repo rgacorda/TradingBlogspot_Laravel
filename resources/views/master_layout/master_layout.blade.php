@@ -24,7 +24,7 @@
     label.rat, input.rat{
       display: block;
       width: 100%;
-    }     
+    }
     ul.rat{
       padding: 0;
       margin: 0;
@@ -47,14 +47,14 @@
     input[type="radio"]{
       display: none
     }
- 
+
   </style>
 
 
 </head>
 
 <body>
-  
+
 
     <div class="container">
         <header class="blog-header py-3">
@@ -124,7 +124,7 @@
               <!--Grid column-->
               <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Footer text</h5>
-        
+
                 <p>
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
                   molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
@@ -132,11 +132,11 @@
                 </p>
               </div>
               <!--Grid column-->
-        
+
               <!--Grid column-->
               <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Footer text</h5>
-        
+
                 <p>
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
                   molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
@@ -148,7 +148,7 @@
             <!--Grid row-->
           </div>
           <!-- Grid container -->
-        
+
           <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © 2020 Copyright:
@@ -175,11 +175,11 @@
   })
 </script>
 
-  
+
 
   <!-- Bootstrap JavaScript Libraries -->
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -192,6 +192,6 @@
 
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
-              
+
 </body>
 </html>

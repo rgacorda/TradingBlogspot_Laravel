@@ -62,12 +62,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Are you sure you want to delete this post?</p>
-          <form action="{{url('/delete_post')}}" method="post">
+          <p>Are you sure you want to request delete this post?</p>
+          <form action="{{url('/promptDelete')}}" method="post">
             @csrf
             <input hidden name="post_id" id="post_id">
+            <input name="deletereason" class="form-control" placeholder="Add your Reason">
+            <span class="text-danger">@error('deletereason') {{$message}}@enderror</span>
             <div class="modal-footer">
-              <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+              <button type="submit" name="delete" class="btn btn-danger">Request</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
           </form>

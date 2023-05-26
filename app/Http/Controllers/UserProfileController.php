@@ -86,13 +86,17 @@ class UserProfileController extends Controller
 
     public function edit(User $user)
     {
-         $userdetails = DB::table('users')
+        if(Session::get('loginID')!=$user->id){
+            return back();
+        }else{
+            $userdetails = DB::table('users')
          ->join('roles','users.role_id','=','roles.id')
          ->where('users.id','=',$user->id)
          ->first();
 
+        $deleteP = Post::where('isDelete','=',"To be Approved")->get();
         $approve = Post::where('isApproved','=',"To be Approved")->get();
-        $userposts = Post::where('user_id',$user->id)->get();
+        $userposts = Post::where('user_id',$user->id)->paginate(5);
         $users = DB::table('users')
                       ->join('roles','users.role_id','=','roles.id')
                       ->select('users.*','roles.role_desc')
@@ -104,7 +108,9 @@ class UserProfileController extends Controller
 
 
 
-        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts','approve'));
+        return view('user_func.edit_user_profile', compact('userdetails','userposts','users','posts','approve','deleteP'));
+        }
+         
     }
 
     /**
@@ -123,7 +129,10 @@ class UserProfileController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->bio = $request->bio;
-        $user->password = Hash::make($request->password);
+
+        if(!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
 
         if($request->hasFile('profile')){
             $destination = 'storage/images/profile'.$user->profile;
@@ -162,6 +171,8 @@ class UserProfileController extends Controller
         $deleted = User::find($request->user_id);
         $deleted->delete();
 
-        return back()->with('success', 'User has been deleted successfully');
+        return redirect('/logout');
     }
+    
+
 }

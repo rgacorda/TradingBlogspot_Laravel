@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('content', 10000);
             $table->string('image')->nullable();
             $table->string('isApproved');
+            $table->string('isDelete')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('DeleteReason')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('cat_id');

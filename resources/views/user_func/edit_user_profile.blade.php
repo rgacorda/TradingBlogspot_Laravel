@@ -107,6 +107,7 @@
                     <div class="row">
                       <div class="col d-flex justify-content-end">
                         <button class="btn btn-sm btn-outline-secondary" type="submit">Save Changes</button>
+                        <button type="button" name="del-user" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deluserModal" data-userId="{{$userdetails->id}}">Delete</button>
                       </div>
                     </div>
                   </form>
@@ -122,7 +123,6 @@
   </div>
 </div>
 </div>
-
 
 @if (Session::get('roleID')==1)
     {{-- Admin: User Panel --}}
@@ -144,7 +144,6 @@
               <th scope="col" class="">Email</th>
               <th scope="col" class="">Password</th>
               <th scope="col" class="">Role</th>
-              <th scope="col" class="">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -155,16 +154,34 @@
               <td class="">{{$user->password}}</td>
               <td class="">{{$user->role_desc}}</td>
               <td class="">{{$user->id}}</td>
-              <td class="">
-                <button type="button" name="del-user" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deluserModal" data-userId="{{$user->id}}">Delete</button>
-              </td>
             </tr>
             @endforeach
           </tbody>
         </table>
+        <br>
+        <div class="">
+            <div class="container">
+                <div class="row">
+                    <hr>
+                    <h2 class="col-9">Generate Reports</h2>
+                    <form method="GET" action="{{ route('generatePDF') }}" target="_blank" class="col-3">
+                        <div class="form-group d-flex">
+                            <select class="form-control mr-2" name="month">
+                              @for($i=1; $i<=12; $i++)
+                                <option value="{{ $i }}">{{ date("F", mktime(0, 0, 0, $i, 1)) }}</option>
+                              @endfor
+                            </select>
+                            <button type="submit" class="btn btn-outline-secondary">Generate PDF</button>
+                          </div>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
-<br><br>
+<br>
+
     {{-- Pending Posts --}}
     {{-- Need FIXING --}}
     <div class="container">
@@ -186,11 +203,48 @@
           <tbody>
             @foreach ($approve as $appr)
             <tr>
-              <td class="col-7">{{$appr->title}}</td>
+              <td class="col-7"><a href="{{route('post.show',$appr->id)}}">{{$appr->title}}</a></td>
               <td class="col-3">{{$appr->created_at}}</td>
               <td class="col-2">
                   <button type="button" name="approve" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#approveModal" data-postid="{{$appr->id}}">Accept</button>
                   <button type="button" name="reject" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectModal" data-postid="{{$appr->id}}">Reject</button>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <br><br>
+
+    <div class="container">
+      <div class="">
+        <div class="row">
+          <hr>
+          <h2 class="col-10">Pending Delete Posts</h2>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col" class="col-7">Title</th>
+              <th scope="col" class="col-3">Reason of Delete</th>
+              <th scope="col" class="col-3">Upload Date</th>
+              <th scope="col" class="col-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($deleteP as $delp)
+            <tr>
+              <td class="col-7"><a href="{{route('post.show',$delp->id)}}">{{$delp->title}}</a></td>
+              <th scope="col" class="col-3">{{$delp->DeleteReason}}</th>
+              <td class="col-3">{{$delp->created_at}}</td>
+              <td class="col-2">
+                  <button type="button" name="approvedelete" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#approvedeleteModal" data-postid="{{$delp->id}}">Accept</button>
+                  <button type="button" name="rejectdelete" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#rejectdeleteModal" data-postid="{{$delp->id}}">Reject</button>
               </td>
             </tr>
             @endforeach
@@ -207,7 +261,7 @@
   <div class="">
     <div class="row">
       <hr>
-      <h2 class="col-10">Your Posts</h2>
+      <h2 class="col-10">{{$userdetails->first_name}}'s Posts</h2>
       <div class="col-2">
         @if (Session::has('loginID'))
           <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createpostModal">Create a Thread</button>
@@ -220,24 +274,30 @@
       <thead>
         <tr>
           <th scope="col" class="col-7">Title</th>
-          <th scope="col" class="col-3">Status</th>
+          <th scope="col" class="col-3">Reason</th>
+          <th scope="col" class="col-3">Approve Status</th>
+          <th scope="col" class="col-3">Delete Status</th>
           <th scope="col" class="col-2">Action</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($userposts as $userpost)
         <tr>
-          <td class="col-7">{{$userpost->title}}</td>
-          <td class="col-3">{{$userpost->isApproved}}</td>
+          <td class="col-2"><a href="{{route('post.show',$userpost->id)}}">{{$userpost->title}}</a></td>
+          <td class="col-2">{{$userpost->reason}}</td>
+          <td class="col-2">{{$userpost->isApproved}}</td>
+          <td class="col-2">{{$userpost->isDelete}}</td>
           <td class="col-2">
-              <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editpostModal" data-postid="{{$userpost->id}}"data-posttitle="{{$userpost->title}}" data-postcontent="{{$userpost->content}}" data-postcat="{{$userpost->cat_id}}">Edit</button>
-              <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delpostModal" data-postid="{{$userpost->id}}">Delete</button>
+            @if ($userpost->isApproved !="To be Approved" && $userpost->isDelete !="To be Approved")
+            <button type="button" name="edit" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editpostModal" data-postid="{{$userpost->id}}"data-posttitle="{{$userpost->title}}" data-postcontent="{{$userpost->content}}" data-postcat="{{$userpost->cat_id}}">Edit</button>
+            <button type="button" name="del" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delpostModal" data-postid="{{$userpost->id}}">Delete</button>
+            @endif
           </td>
         </tr>
         @endforeach
       </tbody>
     </table>
-    {!! $posts->links('pagination::bootstrap-5') !!}
+    {!! $userposts->links('pagination::bootstrap-5') !!}
   </div>
 </div>
 
@@ -249,6 +309,7 @@
 @include('user_func.action_post_modal')
 @include('admin_func.users_modal')
 @include('admin_func.approval_modal')
+@include('admin_func.delete_modal')
 
 {{-- pass value to modal delete --}}
   <script>
@@ -305,6 +366,26 @@
     button.addEventListener('click', function() {
       var postId = this.getAttribute('data-postid');
       document.querySelector('#rejectModal input[name="post_id"]').value = postId;
+    });
+  });
+</script>
+
+<script>
+  var deleteButtons = document.querySelectorAll('button[name="approvedelete"]');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var postId = this.getAttribute('data-postid');
+      document.querySelector('#approvedeleteModal input[name="post_id"]').value = postId;
+    });
+  });
+</script>
+
+<script>
+  var deleteButtons = document.querySelectorAll('button[name="rejectdelete"]');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var postId = this.getAttribute('data-postid');
+      document.querySelector('#rejectdeleteModal input[name="post_id"]').value = postId;
     });
   });
 </script>

@@ -83,11 +83,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Delete User</h5>
+          <h5 class="modal-title">Delete Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Are you sure you want to delete this user?</p>
+          <p>This may affect all your posted threads. Are you sure you want to delete your account?
+          </p>
           <form action="{{url('/delete_user')}}" method="post">
             @csrf
             <input hidden name="user_id" id="user_id">

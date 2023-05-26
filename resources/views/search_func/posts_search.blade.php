@@ -36,57 +36,85 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {!! $user_posts->appends(request()->query())->links('pagination::bootstrap-5') !!}
                 @else
                     <p>No search results by Username found.</p>
             @endif
-        </div>
-        @if ($title_posts->count())
-            <h2>Search results by post title:</h2>
-            <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($title_posts as $post)
+            @if ($title_posts->count())
+                <h2>Search results by post title:</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
                             <tr>
-                                <td class="col-8"><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
-                                </td>
+                                <th>Title</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                    <p>No search results by Post found.</p>
-        @endif
-    </div>
-    @if ($content_posts->count())
-        <h2>Search results by post content:</h2>
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($content_posts as $post)
-                        <tr>
-                            <td class="col-8"><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
-                            </td>
-                            <td class="col3">{{ $post->content }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>No search results by content Content found.</p>
-    @endif
-    </div>
-    </div>
+                        </thead>
+                        <tbody>
+                            @foreach ($title_posts as $post)
+                                <tr>
+                                    <td class="col-8"><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {!! $title_posts->appends(request()->query())->links('pagination::bootstrap-5') !!}
+                @else
+                    <p>No search results by Title found.</p>
+            @endif
+            @if ($content_posts->count())
+                <h2>Search results by post content:</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($content_posts as $post)
+                                <tr>
+                                    <td class="col-8"><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
+                                    </td>
+                                    <td class="col3">{{ $post->content }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {!! $content_posts->appends(request()->query())->links('pagination::bootstrap-5') !!}
+                @else
+                    <p>No search results by Content found.</p>
+            @endif
+            @if ($category_posts->count())
+                <h2>Search results by category description:</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($category_posts as $post)
+                                <tr>
+                                    <td class="col-8"><a
+                                            href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
+                                    </td>
+                                    <td class="col-4">{{ $post->content }}</td>
+                                    <td class="col-2">{{ $post->cat_desc }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {!! $category_posts->appends(request()->query())->links('pagination::bootstrap-5') !!}
+                @else
+                    <p>No search results by Category found.</p>
+            @endif
+
+        </div>
     </div>
 
 @endsection

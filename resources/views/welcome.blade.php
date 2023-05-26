@@ -15,6 +15,7 @@
     <?php 
       $hottest = DB::table("comms")
                 ->join('posts','comms.post_id', '=', 'posts.id')
+                ->where('isApproved','=','Accepted')
                 ->select('posts.id','posts.title',DB::raw('left(posts.content,150) as econtent'),'posts.image','posts.user_id', DB::raw('count(comms.post_id) as num_comments'))
                 ->orderBy('num_comments','desc')
                 ->groupBy('posts.id','posts.title','econtent','posts.image','posts.user_id')
@@ -23,6 +24,7 @@
       $rated = DB::table('comms')
           ->select(DB::raw('sum(rating), posts.id, posts.title, posts.image, posts.created_at'),DB::raw('left(posts.content,40) as econtent'))
           ->join('posts','comms.post_id','=','posts.id')
+          ->where('isApproved','=','Accepted')
           ->groupBy('posts.id', 'posts.id', 'posts.title', 'econtent', 'posts.image', 'posts.created_at')
           ->orderBy('rating','desc')
           ->limit(1)
@@ -30,6 +32,7 @@
 
       $recent = DB::table('posts')
                 ->select('posts.*',DB::raw('left(posts.content,40) as econtent'))
+                ->where('isApproved','=','Accepted')
                 ->orderBy('created_at','desc')
                 ->first();
     ?>
@@ -78,7 +81,7 @@
         <h3 class="mb-0">
           <a class="text-dark" href="#">{{$rated->title}}</a>
         </h3>
-        <div class="mb-1 text-muted">{{$rated->created_at}}</div>
+        <div class="mb-1 text-muted">{{ \Carbon\Carbon::parse($rated->created_at)->toFormattedDateString() }}</div>
         <p class="card-text mb-auto">{{$rated->econtent}}...</p>
         <a href="{{route('post.show',$rated->id)}}">Continue reading</a>
       </div>
@@ -114,7 +117,7 @@
       <h3 class="mb-0">
         <a class="text-dark" href="#">{{$recent->title}}</a>
       </h3>
-      <div class="mb-1 text-muted">{{$recent->created_at}}</div>
+      <div class="mb-1 text-muted">{{ \Carbon\Carbon::parse($recent->created_at)->toFormattedDateString() }}</div>
       <p class="card-text mb-auto">{{$recent->econtent}}...</p>
       <a href="{{route('post.show',$recent->id)}}">Continue reading</a>
     </div>

@@ -32,6 +32,8 @@
           <form action="{{url('/rejectPost')}}" method="post">
             @csrf
             <input hidden name="post_id" id="post_id">
+            <input name="reason" class="form-control" placeholder="Add your Reason">
+            <span class="text-danger">@error('reason') {{$message}}@enderror</span>
             <div class="modal-footer">
               <button type="submit" name="delete" class="btn btn-danger">Proceed</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
